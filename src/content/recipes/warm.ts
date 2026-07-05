@@ -62,7 +62,7 @@ export const warmRecipes: Recipe[] = [
     ],
     substitutionNotes:
       "Hähnchenbrust geht auch — dann etwas kürzer braten, damit sie saftig bleibt. Kein Sake? Weißwein oder ein Schuss Wasser.",
-    guideIds: [],
+    guideIds: ["teriyaki-sauce-selbst", "reis-richtig-kochen"],
     illustrationId: "chicken-teriyaki",
   },
   {
@@ -119,7 +119,7 @@ export const warmRecipes: Recipe[] = [
     ],
     substitutionNotes:
       "Rotes Miso geht auch (kräftiger, etwas weniger nehmen). Ohne Mirin: eine Prise mehr Zucker in etwas Wasser.",
-    guideIds: [],
+    guideIds: ["miso-richtig-verwenden"],
     illustrationId: "miso-lachs",
   },
   {
@@ -174,7 +174,7 @@ export const warmRecipes: Recipe[] = [
     ],
     substitutionNotes:
       "Statt Schinken gehen auch Speck, Reste von Hähnchen oder für vegetarisch einfach mehr Gemüse (Erbsen, Karotte). Nur frisch gekochten Reis? Kurz ausbreiten und abkühlen lassen.",
-    guideIds: [],
+    guideIds: ["reis-richtig-kochen"],
     illustrationId: "chahan",
   },
   {
@@ -237,7 +237,7 @@ export const warmRecipes: Recipe[] = [
     ],
     substitutionNotes:
       "Vegetarisch: Hähnchen weglassen und mehr Gemüse (Champignons, Zucchini) nehmen — achte auf vegetarische Roux. Schärfer? „Hot“-Roux nehmen oder etwas Sriracha einrühren.",
-    guideIds: [],
+    guideIds: ["japanisches-curry-erklaert"],
     illustrationId: "japanisches-curry",
     mealPrepNote:
       "Schmeckt am nächsten Tag noch besser. Hält 3 Tage im Kühlschrank und lässt sich portionsweise einfrieren — Kartoffeln werden dabei minimal weicher.",

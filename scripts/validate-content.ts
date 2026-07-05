@@ -6,8 +6,9 @@
  *
  * Exits non-zero on any error, printing a grouped report.
  *
- * PHASE 2: the per-category floor is relaxed to ≥ 2 (batch 1) and the "catalog
- * total = 60" check is a soft note. Both tighten in Phase 6.
+ * PHASE 6 (strict): per-category floor ≥ 5, catalog total must equal 60, and
+ * every guide must be linked by ≥ 2 recipes (so the Lernen tab stays small but
+ * integrated).
  */
 import {
   Category,
@@ -26,8 +27,9 @@ import { dishArtIds } from "../src/content/illustrations/registry";
 import { costPerServing } from "../src/lib/costs";
 import type { ZodType } from "zod";
 
-const CATEGORY_FLOOR = 2; // Phase 2 batch-1 floor; → 5 in Phase 6.
+const CATEGORY_FLOOR = 5; // Phase 6 strict floor (docs/05 §4).
 const CATALOG_TARGET = 60;
+const GUIDE_MIN_REFS = 2; // Every guide must be linked by ≥ 2 recipes.
 const GUENSTIG_MAX_EUR = 2.5;
 const SPICY_SOURCES = new Set([
   "gochujang",
@@ -172,6 +174,25 @@ for (const g of guides) {
   }
 }
 
+// Every guide must be referenced by ≥ 2 recipes (via recipe.guideIds) so the
+// Lernen tab stays integrated with the recipes rather than a lonely appendix.
+const guideRefCount = new Map<string, number>();
+for (const g of guides) guideRefCount.set(g.id, 0);
+for (const r of recipes) {
+  for (const gid of r.guideIds) {
+    if (guideRefCount.has(gid)) {
+      guideRefCount.set(gid, guideRefCount.get(gid)! + 1);
+    }
+  }
+}
+for (const [gid, count] of guideRefCount) {
+  if (count < GUIDE_MIN_REFS) {
+    err(
+      `Guide „${gid}“: nur von ${count} Rezept(en) verlinkt, mindestens ${GUIDE_MIN_REFS} nötig`,
+    );
+  }
+}
+
 /* --------------------------- 6. Category rules ------------------------- */
 
 const countByCategory = new Map<string, number>();
@@ -265,9 +286,9 @@ for (const r of recipes) {
 
 /* ------------------------------ 8. Notes ------------------------------- */
 
-if (recipes.length < CATALOG_TARGET) {
-  notes.push(
-    `Katalog: ${recipes.length}/${CATALOG_TARGET} Rezepte (Rest folgt in Phase 6).`,
+if (recipes.length !== CATALOG_TARGET) {
+  err(
+    `Katalog: ${recipes.length} Rezepte, exakt ${CATALOG_TARGET} erwartet (Phase 6).`,
   );
 }
 

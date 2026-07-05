@@ -52,7 +52,7 @@ export const leichtRecipes: Recipe[] = [
     ],
     substitutionNotes:
       "Unsicher wegen rohem Ei? Verrühr Ei + Sojasauce kurz in einer heißen (leeren) Pfanne zu ganz weichem Rührei und gib es über den Reis.",
-    guideIds: [],
+    guideIds: ["umami-einfach-erklaert"],
     illustrationId: "tamago-kake-gohan",
   },
   {
@@ -108,7 +108,7 @@ export const leichtRecipes: Recipe[] = [
     ],
     substitutionNotes:
       "Mit normalem Dashi-Pulver (Bonito) schmeckt es klassischer, ist dann aber nicht mehr vegan. Keine Wakame? Ein paar Blattspinat-Blätter geben eine ähnliche, mildere Note.",
-    guideIds: [],
+    guideIds: ["dashi-in-5-minuten", "miso-richtig-verwenden"],
     illustrationId: "misosuppe-klassisch",
   },
   {
@@ -203,7 +203,7 @@ export const leichtRecipes: Recipe[] = [
     ],
     substitutionNotes:
       "Kein Seidentofu? Fester Tofu geht auch, ist nur weniger zart. Für eine vegane Variante die Bonitoflocken weglassen.",
-    guideIds: [],
+    guideIds: ["umami-einfach-erklaert"],
     illustrationId: "hiyayakko",
   },
   {
@@ -264,7 +264,7 @@ export const leichtRecipes: Recipe[] = [
     ],
     substitutionNotes:
       "Keine Umeboshi? Nimm einfach zweimal Lachs oder Thunfisch. Statt Kewpie normale Mayo + Prise Zucker. Warmer Reis lässt sich am leichtesten formen.",
-    guideIds: [],
+    guideIds: ["bento-basics"],
     illustrationId: "onigiri",
     mealPrepNote:
       "Am besten frisch, halten aber 1 Tag (kühl, in Frischhaltefolie gewickelt). Das Nori erst kurz vor dem Essen umwickeln, damit es knusprig bleibt.",

@@ -61,7 +61,7 @@ export const nudelnRamenRecipes: Recipe[] = [
     ],
     substitutionNotes:
       "Spitzkohl geht auch als Chinakohl oder Weißkohl. Kein Sake? Ein Schuss Wasser oder Weißwein. Statt Schweinebauch schmeckt auch Hähnchen.",
-    guideIds: [],
+    guideIds: ["udon-soba-ramen"],
     illustrationId: "yaki-udon",
   },
   {
@@ -106,7 +106,7 @@ export const nudelnRamenRecipes: Recipe[] = [
     ],
     substitutionNotes:
       "Kein Dashi-Pulver? Ein Stück Kombu 15 Min in dem heißen Wasser ziehen lassen (dann vegetarisch). Mirin kannst du durch eine Prise Zucker ersetzen.",
-    guideIds: [],
+    guideIds: ["udon-soba-ramen", "dashi-in-5-minuten"],
     illustrationId: "kake-udon",
   },
   {
@@ -158,7 +158,7 @@ export const nudelnRamenRecipes: Recipe[] = [
     ],
     substitutionNotes:
       "Rotes Miso geht auch (kräftiger, etwas weniger nehmen). Vegan? Lass die Butter weg oder nimm einen Klecks pflanzliche Alternative.",
-    guideIds: [],
+    guideIds: ["ajitama-ramen-eier", "miso-richtig-verwenden"],
     illustrationId: "miso-butter-mais-ramen",
   },
   {
@@ -205,7 +205,7 @@ export const nudelnRamenRecipes: Recipe[] = [
     ],
     substitutionNotes:
       "Kein Gochujang? Rotes Miso + Chili + eine Prise Zucker kommen in die Nähe. Weniger scharf: erst 1 EL Gochujang nehmen und abschmecken.",
-    guideIds: [],
+    guideIds: ["ajitama-ramen-eier"],
     illustrationId: "gochujang-sesam-ramen",
   },
   {
@@ -254,7 +254,7 @@ export const nudelnRamenRecipes: Recipe[] = [
     ],
     substitutionNotes:
       "Kein Sake? Einfach durch Wasser ersetzen. Für eine schnellere Runde reichen auch 2 Stunden Marinierzeit — dann sind sie milder.",
-    guideIds: [],
+    guideIds: ["ajitama-ramen-eier"],
     illustrationId: "ajitama",
     mealPrepNote:
       "Halten 3–4 Tage im Kühlschrank in der Marinade (danach werden sie sehr salzig). Perfekt als Topping für jede Ramen oder als Snack zwischendurch.",

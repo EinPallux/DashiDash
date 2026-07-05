@@ -73,7 +73,7 @@ export const donburiRecipes: Recipe[] = [
     ],
     substitutionNotes:
       "Kein Mirin? 1 EL Zucker in 2 EL Wasser auflösen. Kein Dashi? Nimm eine Prise mehr Sojasauce und etwas Wasser — wird auch lecker.",
-    guideIds: [],
+    guideIds: ["reis-richtig-kochen", "donburi-verstehen"],
     illustrationId: "oyakodon",
   },
   {
@@ -135,7 +135,7 @@ export const donburiRecipes: Recipe[] = [
     ],
     substitutionNotes:
       "Kein hauchdünnes Rind bekommen? Leg ein Stück Rinderhüfte 15 Min ins Gefrierfach — dann lässt es sich super dünn schneiden. Kein Sake? Trockener Weißwein oder einfach weglassen.",
-    guideIds: [],
+    guideIds: ["donburi-verstehen", "reis-richtig-kochen"],
     illustrationId: "gyudon",
   },
   {
@@ -201,7 +201,7 @@ export const donburiRecipes: Recipe[] = [
     ],
     substitutionNotes:
       "Statt veganer Dashi geht auch normales Dashi-Pulver (dann nicht mehr vegetarisch) oder einfach Wasser + eine Prise mehr Sojasauce.",
-    guideIds: [],
+    guideIds: ["donburi-verstehen"],
     illustrationId: "tamagodon",
   },
   {

@@ -545,6 +545,50 @@ export const ingredients: Ingredient[] = [
     ],
   }),
   mk({
+    id: "yakisoba-nudeln",
+    name: "Yakisoba-Nudeln (vorgekocht)",
+    category: "japanische-basics",
+    section: "asia-regal",
+    lexiconId: "japanische-nudeln",
+    price: {
+      amount: 1,
+      unit: "packung",
+      eur: 0.85,
+      packEur: 2.5,
+      packNote: "3er-Pack, je ~150 g",
+    },
+    substitutes: [
+      {
+        ingredientId: "ramen-instant",
+        text: "Instant-Ramen-Nudeln (ohne Würzpäckchen)",
+        quality: "okay",
+      },
+    ],
+  }),
+  mk({
+    id: "aburaage",
+    name: "Aburaage (frittierte Tofutaschen)",
+    namePlural: "Aburaage",
+    category: "japanische-basics",
+    section: "asia-regal",
+    asiaLadenHint: true,
+    lexiconId: "aburaage",
+    price: {
+      amount: 1,
+      unit: "stueck",
+      eur: 0.5,
+      packEur: 2.5,
+      packNote: "Packung ~5 Stück, gut einfrierbar",
+    },
+    substitutes: [
+      {
+        ingredientId: "tofu",
+        text: "Fester Tofu in dünnen Scheiben, kurz angebraten",
+        quality: "notloesung",
+      },
+    ],
+  }),
+  mk({
     id: "sushi-reis",
     name: "Sushi-Reis (Rundkorn)",
     category: "vorratsschrank",
@@ -708,6 +752,21 @@ export const ingredients: Ingredient[] = [
       eur: 0.85,
       packEur: 4.5,
       packNote: "ca. 500 g",
+    },
+  }),
+  mk({
+    id: "schweineschnitzel",
+    name: "Schweineschnitzel (Lende)",
+    namePlural: "Schweineschnitzel",
+    category: "frische-zutaten",
+    section: "fleisch-fisch",
+    perishable: true,
+    price: {
+      amount: 100,
+      unit: "g",
+      eur: 0.85,
+      packEur: 5.0,
+      packNote: "ca. 2 Schnitzel",
     },
   }),
   mk({
@@ -1224,6 +1283,40 @@ export const ingredients: Ingredient[] = [
       eur: 0.8,
       packEur: 3.0,
       packNote: "350-g-Glas",
+    },
+  }),
+  mk({
+    id: "sesampaste",
+    name: "Sesampaste (Tahin)",
+    category: "vorratsschrank",
+    section: "trockenwaren",
+    price: {
+      amount: 100,
+      unit: "g",
+      eur: 1.2,
+      packEur: 4.0,
+      packNote: "Glas ~300 g",
+    },
+    substitutes: [
+      {
+        ingredientId: "erdnussbutter",
+        text: "Erdnussbutter (nussiger, etwas süßer)",
+        quality: "okay",
+      },
+    ],
+  }),
+  mk({
+    id: "spaghetti",
+    name: "Spaghetti",
+    namePlural: "Spaghetti",
+    category: "vorratsschrank",
+    section: "trockenwaren",
+    price: {
+      amount: 100,
+      unit: "g",
+      eur: 0.2,
+      packEur: 1.0,
+      packNote: "500-g-Packung",
     },
   }),
   mk({

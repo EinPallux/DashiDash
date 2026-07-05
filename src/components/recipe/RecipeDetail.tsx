@@ -27,7 +27,12 @@ import {
 import { buildCard } from "@/components/recipe/card";
 import { EQUIPMENT_META } from "@/components/recipe/equipment";
 import { LexiconSheet } from "@/components/recipe/LexiconSheet";
-import { categoryById, getIngredient, relatedRecipes } from "@/lib/content";
+import {
+  categoryById,
+  getGuide,
+  getIngredient,
+  relatedRecipes,
+} from "@/lib/content";
 import { costBadgeEur } from "@/lib/costs";
 import { useDefaultServings } from "@/lib/prefs";
 import { recipeMeta } from "@/lib/search";
@@ -281,6 +286,44 @@ export function RecipeDetail({ recipe }: { recipe: Recipe }) {
             <p className="text-body text-nori mt-1">
               {recipe.substitutionNotes}
             </p>
+          </div>
+        </section>
+      )}
+
+      {/* learn cross-links (docs/06 recipe↔guide) */}
+      {recipe.guideIds.length > 0 && (
+        <section className="px-gutter mt-6">
+          <h2 className="font-display text-title text-nori font-extrabold">
+            Mehr dazu lernen
+          </h2>
+          <div className="mt-3 space-y-2">
+            {recipe.guideIds.map((gid) => {
+              const guide = getGuide(gid);
+              if (!guide) return null;
+              return (
+                <Link
+                  key={gid}
+                  href={`/lernen/guide/${gid}`}
+                  className="rounded-card border-hairline bg-paper shadow-card flex items-center gap-3 border p-3 active:scale-[0.99]"
+                >
+                  <span
+                    aria-hidden
+                    className="rounded-chip bg-rice-warm grid h-11 w-11 shrink-0 place-items-center text-2xl"
+                  >
+                    {guide.emoji}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-display text-heading text-nori font-bold">
+                      {guide.title}
+                    </p>
+                    <p className="text-caption text-nori-60 line-clamp-1">
+                      {guide.teaser}
+                    </p>
+                  </div>
+                  <IconChevronRight className="text-nori-60 h-5 w-5 shrink-0" />
+                </Link>
+              );
+            })}
           </div>
         </section>
       )}

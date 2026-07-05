@@ -280,4 +280,17 @@ export const lexicon: LexiconEntry[] = [
     substitute:
       "Schwer zu ersetzen; die Füllung sonst mit etwas Frischkäse + Zitrone abwandeln.",
   },
+  {
+    id: "aburaage",
+    term: "Aburaage",
+    termJp: "油揚げ",
+    whatIsIt:
+      "Dünn geschnittener, frittierter Tofu in Taschenform. Süß-herzhaft geschmort ist es die „Fuchs“-Zutat auf Kitsune-Udon und die Hülle für Inari-Sushi.",
+    tastesLike:
+      "Mild nach Tofu und Frittiertem; einmal in Dashi geschmort wird es saftig, süß und salzig zugleich.",
+    whereToBuy:
+      "Asia-Laden, meist im Kühl- oder Tiefkühlregal, ca. 2,50 € die Packung. Eingefroren hält es ewig.",
+    substitute:
+      "Kaum ersetzbar. Zur Not fester Tofu in dünnen Scheiben, kurz angebraten — schmeckt anders, funktioniert aber.",
+  },
 ];
