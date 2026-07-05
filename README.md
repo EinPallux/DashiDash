@@ -10,7 +10,9 @@ DashiDash is a German-language, local-first PWA for quick Japanese home cooking:
 
 ## Status
 
-**Planning complete — implementation not started.** This repo currently contains the full planning package:
+**Phase 0 complete — scaffold & foundations.** The app now builds, installs as a PWA, and springs between five styled tab screens. Feature screens land phase by phase (see [`ROADMAP.md`](ROADMAP.md)).
+
+The full planning package remains the source of truth:
 
 | File | Purpose |
 |---|---|
@@ -24,4 +26,27 @@ DashiDash is a German-language, local-first PWA for quick Japanese home cooking:
 | [`docs/05-CONTENT-GUIDE.md`](docs/05-CONTENT-GUIDE.md) | Recipe/lexicon/guide authoring rules, German pricing |
 | [`docs/06-RECIPE-CATALOG.md`](docs/06-RECIPE-CATALOG.md) | The 60 launch recipes |
 
-To start building: read `CLAUDE.md`, then execute `ROADMAP.md` Phase 0.
+## Getting started
+
+```bash
+pnpm install
+pnpm dev              # dev server → http://localhost:3000
+```
+
+| Command | What it does |
+|---|---|
+| `pnpm dev` | Dev server (webpack — Serwist's SW plugin requires it) |
+| `pnpm build` | Production build (bundles the service worker) |
+| `pnpm start` | Serve the production build |
+| `pnpm lint` | ESLint + Prettier check |
+| `pnpm typecheck` | `tsc` for the app **and** the service worker |
+| `pnpm test` | Vitest unit tests |
+| `pnpm validate:content` | Content validation (stub until Phase 2) |
+
+> **Note:** the build pins the **webpack** compiler (`next build --webpack`) because `@serwist/next` doesn't yet support Turbopack, which is Next 16's default. Icons under `public/icons/` are generated from the mascot SVG.
+
+### Deploy (Vercel)
+
+Zero-config Next.js: import the GitHub repo in Vercel (framework preset **Next.js**, no env vars). HTTPS + per-branch preview deploys give the visual-review mechanism the roadmap expects.
+
+To continue building: read `CLAUDE.md`, then execute the next phase in `ROADMAP.md`.
