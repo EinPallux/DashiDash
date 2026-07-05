@@ -62,3 +62,13 @@ const FALLBACK: DishComponent = placeholder("dashi");
 export function getDishArt(id: string): DishComponent {
   return REGISTRY[id] ?? FALLBACK;
 }
+
+/**
+ * Render a dish illustration by id. Prefer this at render sites over
+ * `getDishArt` — the registry holds stable, module-level component references,
+ * so this is a lookup, not a component-created-during-render.
+ */
+export function DishArt({ id, ...props }: DishArtProps & { id: string }) {
+  const Component = REGISTRY[id] ?? FALLBACK;
+  return <Component {...props} />;
+}
