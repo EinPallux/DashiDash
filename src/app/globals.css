@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ *
+ * DashiDash design tokens — the single source of truth for the UI.
+ * Mirrors docs/02-DESIGN-SYSTEM.md. Do not hard-code colors, radii,
+ * shadows or type sizes in components — always use these tokens.
+ * ------------------------------------------------------------------ */
+@theme {
+  /* Core palette (§1) — light mode only for v1, backgrounds always warm. */
+  --color-rice: #fff9f0; /* app background */
+  --color-rice-warm: #fff1de; /* section tints, rails, page-outside */
+  --color-paper: #ffffff; /* cards, sheets */
+  --color-nori: #20312b; /* primary text (warm ink) */
+  --color-nori-60: #5c6b65; /* secondary text */
+  --color-dashi: #ff7a45; /* primary brand */
+  --color-dashi-deep: #e85d25; /* pressed primary / button bottom-edge */
+  --color-dashi-soft: #ffe8dc; /* primary tint / active chip fill */
+  --color-matcha: #7ba05b; /* success, "hast du" ticks, vegan */
+  --color-matcha-soft: #eaf2e0; /* success tints */
+  --color-tamago: #ffc53d; /* playful accent, stars, timers */
+  --color-ume: #e05252; /* spice, destructive, urgent */
+  --color-sora: #4e8da6; /* info, lexicon links, focus ring */
+  --color-hairline: rgba(32, 49, 43, 0.08); /* card borders on tints */
+
+  /* Type scale (§2) — mobile, tabular figures on numbers. */
+  --text-display: 1.75rem; /* 28 / 34 */
+  --text-display--line-height: 2.125rem;
+  --text-title: 1.375rem; /* 22 / 28 */
+  --text-title--line-height: 1.75rem;
+  --text-heading: 1.0625rem; /* 17 / 24 */
+  --text-heading--line-height: 1.5rem;
+  --text-body: 0.9375rem; /* 15 / 22 */
+  --text-body--line-height: 1.375rem;
+  --text-caption: 0.8125rem; /* 13 / 18 */
+  --text-caption--line-height: 1.125rem;
+  --text-stat: 2.125rem; /* 34 / 38 */
+  --text-stat--line-height: 2.375rem;
+
+  /* Radius scale (§3) — nothing sharp-cornered, ever. */
+  --radius-chip: 999px;
+  --radius-button: 1rem; /* 16px */
+  --radius-card: 1.25rem; /* 20px */
+  --radius-sheet: 1.75rem; /* 28px */
+
+  /* Elevation (§3) — warm-tinted, soft, layered. Never harsh black. */
+  --shadow-card: 0 2px 8px rgba(58, 42, 26, 0.08);
+  --shadow-raised: 0 8px 24px rgba(58, 42, 26, 0.16);
+
+  /* Named spacing (§3). Base 4px grid is Tailwind's default. */
+  --spacing-gutter: 1.25rem; /* 20px screen gutter */
+  --spacing-rail: 0.75rem; /* 12px rail card gap */
+  --spacing-section: 1.75rem; /* 28px section gap */
+}
+
+/* Fonts are injected by next/font in layout.tsx as CSS variables; map them
+ * to Tailwind's font utilities (font-display / font-body). */
+@theme inline {
+  --font-display: var(--font-baloo);
+  --font-body: var(--font-nunito);
+  --font-sans: var(--font-nunito);
+}
+
+/* ------------------------------------------------------------------ *
+ * Base layer
+ * ------------------------------------------------------------------ */
+@layer base {
+  html {
+    height: 100%;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100%;
+    background-color: var(--color-rice-warm);
+    color: var(--color-nori);
+    font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* Standalone PWA feel: no rubber-band on the page itself. */
+    overscroll-behavior-y: none;
+  }
+
+  /* Headings and buttons default to the chunky display face. */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  /* No blue tap flashes on iOS. */
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Accessible focus ring (§10) — sora, 2px offset. */
+  :focus-visible {
+    outline: 2px solid var(--color-sora);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-dashi-soft);
+    color: var(--color-nori);
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Utilities
+ * ------------------------------------------------------------------ */
+
+/* Safe-area padding for headers, sticky CTAs and the floating tab bar. */
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Horizontal rails scroll without a visible scrollbar. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Tabular, tokenized numbers for stats and counters. */
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
