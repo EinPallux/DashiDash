@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Baloo_2, Nunito } from "next/font/google";
 import { TabBar } from "@/components/ui/TabBar";
+import { Onboarding } from "@/features/onboarding/Onboarding";
 import "./globals.css";
 
 // Display face — chunky, friendly (docs/02 §2).
@@ -58,6 +59,7 @@ export default function RootLayout({
           </main>
           <TabBar />
         </div>
+        <Onboarding />
       </body>
     </html>
   );

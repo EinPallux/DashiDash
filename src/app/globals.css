@@ -131,3 +131,26 @@
 @utility tabular {
   font-variant-numeric: tabular-nums;
 }
+
+/* Skeleton shimmer (§9): a warm sheen sweeping across a rice-warm base.
+ * Animates `transform` only (60fps) and turns off under reduced motion. */
+@keyframes dd-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+.dd-shimmer {
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  animation: dd-shimmer 1.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dd-shimmer {
+    animation: none;
+  }
+}

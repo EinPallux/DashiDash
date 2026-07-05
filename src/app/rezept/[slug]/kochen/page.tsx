@@ -1,4 +1,14 @@
-import { ScreenStub } from "@/components/ui/ScreenStub";
+import { Suspense } from "react";
+import { notFound } from "next/navigation";
+import { recipes } from "@/content/recipes";
+import { CookMode } from "@/features/cook-mode/CookMode";
+import { getRecipe } from "@/lib/content";
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return recipes.map((r) => ({ slug: r.id }));
+}
 
 export const metadata = { title: "Kochmodus" };
 
@@ -8,13 +18,12 @@ export default async function KochenPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const recipe = getRecipe(slug);
+  if (!recipe) notFound();
+
   return (
-    <ScreenStub
-      title="Kochmodus"
-      subtitle="Schritt für Schritt, ohne Ablenkung."
-      blurb="Große Schritte, eingebaute Timer, Bildschirm bleibt an — und am Ende: Itadakimasu!"
-      phase="Kommt in Phase 3"
-      meta={`Rezept: ${slug}`}
-    />
+    <Suspense>
+      <CookMode recipe={recipe} />
+    </Suspense>
   );
 }
