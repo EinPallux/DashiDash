@@ -51,10 +51,12 @@ export function HeroToday() {
             />
           </div>
           <div className="min-w-0 flex-1">
-            <h2 className="font-display text-title text-nori leading-tight font-extrabold">
+            {/* Fixed line-boxes: the pick swaps client-side by day, so reserving
+                2 lines each keeps the hero a constant height (no CLS on swap). */}
+            <h2 className="font-display text-title text-nori line-clamp-2 min-h-[2.2em] leading-tight font-extrabold">
               {recipe.title}
             </h2>
-            <p className="text-body text-nori-60 mt-1 line-clamp-2">
+            <p className="text-body text-nori-60 mt-1 line-clamp-2 min-h-[2.6em]">
               {recipe.subtitle}
             </p>
             <div className="mt-2">
