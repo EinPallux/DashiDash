@@ -1,5 +1,6 @@
 import { CategoryRail } from "@/components/recipe/CategoryRail";
 import { HeroToday } from "@/components/recipe/HeroToday";
+import { PantryTeaser } from "@/components/recipe/PantryTeaser";
 import { SearchEntry } from "@/components/recipe/SearchEntry";
 import { Mascot } from "@/content/illustrations/Mascot";
 import { categoriesInOrder } from "@/lib/content";
@@ -28,6 +29,8 @@ export default function EntdeckenPage() {
       <div className="px-gutter mt-5">
         <HeroToday />
       </div>
+
+      <PantryTeaser />
 
       {categoriesInOrder.map((category) => (
         <CategoryRail key={category.id} category={category} />

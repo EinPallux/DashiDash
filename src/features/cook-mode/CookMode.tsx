@@ -11,6 +11,7 @@ import { Mascot } from "@/content/illustrations/Mascot";
 import { slideStep, useMotionSafe } from "@/lib/motion";
 import { fillAmountTokens, servingFactor } from "@/lib/scaling";
 import { Confetti } from "@/features/cook-mode/Confetti";
+import { consumePantry } from "@/features/pantry/data";
 
 /* --------------------------- device helpers ---------------------------- */
 
@@ -300,7 +301,7 @@ function FinishScreen({
   onExit: () => void;
   reduced: boolean;
 }) {
-  const [checked, setChecked] = useState(false);
+  const [removed, setRemoved] = useState<number | null>(null);
 
   return (
     <div className="bg-rice pt-safe pb-safe relative flex min-h-dvh flex-col items-center justify-center px-8 text-center">
@@ -317,15 +318,21 @@ function FinishScreen({
         <ChunkyButton
           variant="success"
           fullWidth
-          leftIcon={checked ? undefined : <IconPlus className="h-5 w-5" />}
-          onClick={() => setChecked(true)}
-          disabled={checked}
+          leftIcon={
+            removed === null ? <IconPlus className="h-5 w-5" /> : undefined
+          }
+          onClick={async () => setRemoved(await consumePantry(recipe))}
+          disabled={removed !== null}
         >
-          {checked ? "✓ Gemerkt" : "Zutaten aus dem Vorrat abhaken"}
+          {removed === null
+            ? "Zutaten aus dem Vorrat abhaken"
+            : `✓ ${removed} abgehakt`}
         </ChunkyButton>
-        {checked && (
+        {removed !== null && (
           <p className="text-caption text-nori-60">
-            Merken wir uns — der Vorrat kommt in Kürze ✨
+            {removed > 0
+              ? "Frische Zutaten aus dem Vorrat entfernt."
+              : "Nichts Frisches im Vorrat — alles gut."}
           </p>
         )}
         <ChunkyButton variant="primary" fullWidth onClick={onExit}>

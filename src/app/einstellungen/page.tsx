@@ -4,6 +4,8 @@ import { useRef, useState } from "react";
 import { ChunkyButton } from "@/components/ui/ChunkyButton";
 import { Stepper } from "@/components/ui/Stepper";
 import { Mascot } from "@/content/illustrations/Mascot";
+import { exportAll, importAll } from "@/lib/backup";
+import { db, DB_TABLES } from "@/lib/db";
 import { useDefaultServings, useStandalone } from "@/lib/prefs";
 
 function Section({
@@ -31,13 +33,9 @@ export default function EinstellungenPage() {
   const [status, setStatus] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const exportData = () => {
-    const data: Record<string, string> = {};
-    for (let i = 0; i < window.localStorage.length; i++) {
-      const key = window.localStorage.key(i);
-      if (key?.startsWith("dd.")) data[key] = window.localStorage.getItem(key)!;
-    }
-    const blob = new Blob([JSON.stringify({ version: 1, data }, null, 2)], {
+  const exportData = async () => {
+    const backup = await exportAll();
+    const blob = new Blob([JSON.stringify(backup, null, 2)], {
       type: "application/json",
     });
     const url = URL.createObjectURL(blob);
@@ -51,22 +49,16 @@ export default function EinstellungenPage() {
 
   const importData = async (file: File) => {
     try {
-      const parsed = JSON.parse(await file.text()) as {
-        data?: Record<string, string>;
-      };
-      if (parsed.data) {
-        for (const [key, value] of Object.entries(parsed.data)) {
-          if (key.startsWith("dd.")) window.localStorage.setItem(key, value);
-        }
-        setStatus("Import erfolgreich — lädt neu…");
-        setTimeout(() => window.location.reload(), 600);
-      }
+      await importAll(JSON.parse(await file.text()));
+      setStatus("Import erfolgreich — lädt neu…");
+      setTimeout(() => window.location.reload(), 600);
     } catch {
       setStatus("Import fehlgeschlagen — ist das die richtige Datei?");
     }
   };
 
-  const reset = () => {
+  const reset = async () => {
+    await Promise.all(DB_TABLES.map((t) => db.table(t).clear()));
     const keys: string[] = [];
     for (let i = 0; i < window.localStorage.length; i++) {
       const key = window.localStorage.key(i);
@@ -119,7 +111,8 @@ export default function EinstellungenPage() {
           spiel eines ein.
         </p>
         <p className="text-caption text-nori-60 mt-1">
-          (Vorrat, Pläne & Liste kommen in den nächsten Phasen dazu.)
+          Enthält deinen Vorrat. (Pläne & Liste kommen in den nächsten Phasen
+          dazu.)
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
           <ChunkyButton variant="secondary" onClick={exportData}>

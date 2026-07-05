@@ -31,6 +31,7 @@ import { categoryById, getIngredient, relatedRecipes } from "@/lib/content";
 import { costBadgeEur } from "@/lib/costs";
 import { useDefaultServings } from "@/lib/prefs";
 import { recipeMeta } from "@/lib/search";
+import { matchRecipe } from "@/lib/matching";
 import {
   fillAmountTokens,
   formatAmount,
@@ -38,6 +39,11 @@ import {
   servingFactor,
 } from "@/lib/scaling";
 import { ingredientsById } from "@/lib/content";
+import { useMatchInputs } from "@/features/pantry/data";
+import { addMissingToShopping } from "@/features/shopping/data";
+import { IconCheck } from "@/components/ui/icons";
+
+type PantryStatus = "have" | "sub" | "missing" | null;
 
 const DIFF_LEVEL: Record<Recipe["difficulty"], DiffLevel> = {
   easy: 1,
@@ -74,6 +80,23 @@ export function RecipeDetail({ recipe }: { recipe: Recipe }) {
   }, [recipe]);
 
   const related = useMemo(() => relatedRecipes(recipe, 3), [recipe]);
+
+  // Pantry awareness (docs/01 §4.4). Neutral until Dexie resolves.
+  const inputs = useMatchInputs();
+  const match = inputs
+    ? matchRecipe(recipe, inputs.pantrySet, inputs.staplesSet, ingredientsById)
+    : undefined;
+  const [addedToList, setAddedToList] = useState(false);
+
+  const statusFor = (line: RecipeIngredient): PantryStatus => {
+    if (!inputs) return null;
+    const id = line.ingredientId;
+    if (inputs.pantrySet.has(id)) return "have";
+    const ing = ingredientsById.get(id);
+    if (ing?.isStaple && inputs.staplesSet.has(id)) return "have";
+    if (match?.substitutions.some((s) => s.ingredientId === id)) return "sub";
+    return "missing";
+  };
 
   return (
     <div className="pb-36">
@@ -176,6 +199,7 @@ export function RecipeDetail({ recipe }: { recipe: Recipe }) {
                     key={`${line.ingredientId}-${i}`}
                     line={line}
                     factor={factor}
+                    status={statusFor(line)}
                     onLexicon={setLexiconId}
                   />
                 ))}
@@ -183,6 +207,28 @@ export function RecipeDetail({ recipe }: { recipe: Recipe }) {
             </div>
           ))}
         </div>
+
+        {match && match.missing.length > 0 && (
+          <div className="mt-4">
+            <ChunkyButton
+              variant={addedToList ? "success" : "primary"}
+              fullWidth
+              disabled={addedToList}
+              onClick={async () => {
+                await addMissingToShopping(
+                  recipe,
+                  match.missing,
+                  activeServings,
+                );
+                setAddedToList(true);
+              }}
+            >
+              {addedToList
+                ? "✓ Auf der Einkaufsliste"
+                : `Fehlendes auf die Liste (${match.missing.length})`}
+            </ChunkyButton>
+          </div>
+        )}
       </section>
 
       {/* equipment */}
@@ -281,13 +327,46 @@ export function RecipeDetail({ recipe }: { recipe: Recipe }) {
   );
 }
 
+function StatusDot({ status }: { status: PantryStatus }) {
+  if (status === null) return <span className="h-5 w-5 shrink-0" aria-hidden />;
+  if (status === "have")
+    return (
+      <span
+        className="bg-matcha text-paper grid h-5 w-5 shrink-0 place-items-center rounded-full"
+        aria-label="hast du"
+        title="hast du"
+      >
+        <IconCheck className="h-3.5 w-3.5" />
+      </span>
+    );
+  if (status === "sub")
+    return (
+      <span
+        className="bg-sora/15 text-sora grid h-5 w-5 shrink-0 place-items-center rounded-full text-[0.7rem]"
+        aria-label="ersetzbar"
+        title="ersetzbar"
+      >
+        ✨
+      </span>
+    );
+  return (
+    <span
+      className="border-nori/20 h-5 w-5 shrink-0 rounded-full border-2"
+      aria-label="fehlt"
+      title="fehlt"
+    />
+  );
+}
+
 function IngredientRow({
   line,
   factor,
+  status,
   onLexicon,
 }: {
   line: RecipeIngredient;
   factor: number;
+  status: PantryStatus;
   onLexicon: (lexiconId: string) => void;
 }) {
   const ing = getIngredient(line.ingredientId);
@@ -296,8 +375,9 @@ function IngredientRow({
   const lexiconId = ing?.lexiconId;
 
   return (
-    <div className="border-hairline flex items-baseline gap-3 border-b py-2.5 last:border-0">
-      <div className="w-24 shrink-0 text-right">
+    <div className="border-hairline flex items-center gap-2.5 border-b py-2.5 last:border-0">
+      <StatusDot status={status} />
+      <div className="w-20 shrink-0 text-right">
         <motion.span
           key={amountText}
           initial={{ opacity: 0.35 }}

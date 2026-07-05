@@ -16,6 +16,8 @@
     "validate:content": "tsx scripts/validate-content.ts"
   },
   "dependencies": {
+    "dexie": "^4.4.4",
+    "dexie-react-hooks": "^4.4.0",
     "motion": "^12.42.2",
     "next": "16.2.10",
     "react": "19.2.7",

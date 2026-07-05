@@ -1,14 +1,7 @@
-import { ScreenStub } from "@/components/ui/ScreenStub";
+import { ResteRetterScreen } from "@/features/pantry/ResteRetterScreen";
 
-export const metadata = { title: "Reste-Retter" };
+export const metadata = { title: "Reste retten" };
 
 export default function ResteRetterPage() {
-  return (
-    <ScreenStub
-      title="Reste-Retter"
-      subtitle="Rette, was weg muss."
-      blurb="Wähl deine Reste und bekomm Gerichte, die sie clever verbrauchen — schnell und ohne Verschwendung."
-      phase="Kommt in Phase 4"
-    />
-  );
+  return <ResteRetterScreen />;
 }
