@@ -22,6 +22,15 @@ import { Stepper } from "@/components/ui/Stepper";
 import { recipeCardFixtures } from "@/content/fixtures";
 import { Mascot } from "@/content/illustrations/Mascot";
 import {
+  OnigiriArt,
+  OyakodonArt,
+  YakiUdonArt,
+} from "@/content/illustrations/dishes";
+import { getDishArt } from "@/content/illustrations/registry";
+import { ingredients } from "@/content/ingredients";
+import { recipes } from "@/content/recipes";
+import { toRecipeCardData } from "@/lib/recipe-card";
+import {
   IconBasket,
   IconBlender,
   IconBowl,
@@ -177,6 +186,19 @@ export default function StyleguidePage() {
   const resultCount = Math.max(0, 24 - activeFilters * 4);
   const eggs = Math.round((3 * portions) / 2);
 
+  // Real batch-1 content mapped through the RecipeCard view-model.
+  const ingredientsById = new Map(ingredients.map((i) => [i.id, i]));
+  const realCards = recipes.map((r) => {
+    const Art = getDishArt(r.illustrationId);
+    return toRecipeCardData(r, ingredientsById, <Art title={r.title} />);
+  });
+
+  const calibration = [
+    { Art: OyakodonArt, label: "oyakodon" },
+    { Art: YakiUdonArt, label: "yaki-udon" },
+    { Art: OnigiriArt, label: "onigiri" },
+  ];
+
   return (
     <div className="px-gutter pt-safe pb-16">
       <header className="pt-6">
@@ -191,6 +213,53 @@ export default function StyleguidePage() {
           für das Designsystem.
         </p>
       </header>
+
+      {/* --------------------- Phase 2 · Kalibrierung ----------------------- */}
+      <Section title="Kalibrierung (Illustrationen)">
+        <p className="text-body text-nori-60 -mt-1 mb-3">
+          Die drei Kalibrier-Illustrationen (docs/02 §7) — gleicher Stil, 2,5px
+          Nori-Kontur, palettentreue Füllungen. Stil hiermit gelockt.
+        </p>
+        <div className="grid grid-cols-3 gap-3">
+          {calibration.map(({ Art, label }) => (
+            <div key={label} className="flex flex-col items-center gap-1.5">
+              <div className="rounded-card bg-rice-warm grid aspect-square w-full place-items-center">
+                <Art title={label} className="h-[86%] w-[86%]" />
+              </div>
+              <span className="text-caption text-nori-60 font-mono">
+                {label}
+              </span>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* ---------------------- Phase 2 · Echte Rezepte --------------------- */}
+      <Section title="Batch 1 · echte Rezepte">
+        <p className="text-body text-nori-60 -mt-1 mb-3">
+          {`${recipes.length} Rezepte, echte Zutaten, abgeleitete Kosten & Zutatenzahl. Die Kalibrier-Trio-Karten zeigen die finale Illustration, der Rest Platzhalter.`}
+        </p>
+        <div className="no-scrollbar -mx-gutter px-gutter flex gap-3 overflow-x-auto pb-1">
+          {realCards.map((data) => (
+            <RecipeCard
+              key={data.id}
+              data={data}
+              size="rail"
+              href={`/rezept/${data.id}`}
+            />
+          ))}
+        </div>
+        <div className="mt-4 space-y-3">
+          {realCards.slice(0, 3).map((data) => (
+            <RecipeCard
+              key={data.id}
+              data={data}
+              size="grid"
+              href={`/rezept/${data.id}`}
+            />
+          ))}
+        </div>
+      </Section>
 
       {/* ------------------------------- Farben ------------------------------ */}
       <Section title="Farben">
